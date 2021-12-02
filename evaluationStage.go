@@ -135,6 +135,13 @@ func ltStage(left interface{}, right interface{}, parameters Parameters) (interf
 	return boolIface(left.(float64) < right.(float64)), nil
 }
 func equalStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
+	switch left.(type) {
+        case float64:
+                switch right.(type) {
+                case float64:
+                        return math.Abs(left.(float64) - right.(float64)) < 0.01, nil
+                }
+        }
 	return boolIface(reflect.DeepEqual(left, right)), nil
 }
 func notEqualStage(left interface{}, right interface{}, parameters Parameters) (interface{}, error) {
